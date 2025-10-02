@@ -7,7 +7,21 @@ def app():
         menu_principal()
         print()
         opcion = input("Ingrese opción[0-4]: ")
-        if opcion == '0':
+        if opcion == '1':
+            pass
+        elif opcion == '2':
+            pass
+        elif opcion == '3':
+            pass
+        elif opcion == '4':
+            pass
+        elif opcion == '5':
+            pass
+        elif opcion == '6':
+            pass
+        elif opcion == '7':
+            pass
+        elif opcion == '0':
             print("saliendo del sistema...")
             verdadero = False
 
