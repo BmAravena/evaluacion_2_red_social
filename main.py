@@ -4,9 +4,9 @@ def app():
     verdadero = True
     while verdadero:
         print(f"\nBienvenido a")
-        menu_principal()
+        menu_principal()    
         print()
-        opcion = input("Ingrese opción[0-4]: ")
+        opcion = input("Ingrese opción[0-7]: ")
         if opcion == '1':
             pass
         elif opcion == '2':
