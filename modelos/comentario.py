@@ -1,4 +1,4 @@
-from sqlalchemy import Column, Integer, String, Boolean, ForeignKey, Text, CURRENT_TIMESTAMP
+from sqlalchemy import Column, Integer, String, Boolean, ForeignKey, Text, DateTime, func
 from modelos.base import BaseModel
 
 
