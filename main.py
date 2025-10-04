@@ -1,7 +1,6 @@
 from iu.menu_principal import menu_principal
 from datos.conexion import Session
-from modelos.usuario import Usuario
-from negocios.negocio_usuario import registrar_usuario, realizar_publicacion, realizar_comentario
+from negocios.negocio_usuario import registrar_usuario, realizar_publicacion, realizar_comentario, enviar_solicitudamistad
 
 
 sesion = Session()

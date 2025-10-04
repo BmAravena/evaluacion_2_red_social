@@ -2,6 +2,8 @@ from datos.conexion import Session
 from sqlalchemy.exc import SQLAlchemyError
 from modelos.usuario import Usuario
 from modelos.publicacion import Publicacion
+from negocios.negocio_publicacion import valida_publicacion
+from negocios.negocio_comentario import valida_comentario
 
 
 sesion = Session()
@@ -16,7 +18,6 @@ def registrar_usuario():
         if not existe_correo:
             contrasenha = input("Ingresa una contraseña: ")
             nuevo_usuario = Usuario(nombre_usuario=usuario, contrasenha=contrasenha, correo=mail)
-
             try:
                 sesion.add(nuevo_usuario)
                 sesion.commit()
@@ -33,26 +34,33 @@ def registrar_usuario():
 
 
 
+
 def realizar_publicacion():
     nombre_usuario = input("Ingresa tu nombre de usuario: ")
     usuario = sesion.query(Usuario).filter_by(nombre_usuario=nombre_usuario).first()
     if usuario:
-        try:
-            publi = input("Ingresa lo que deseas publicar: ")
-            nueva_publicacion = Publicacion(contenido_publicacion=publi, id_usuario=usuario.id_usuario)
-            sesion.add(nueva_publicacion)
-            sesion.commit()
-            print("Públicación creada exitosamente")
-
-        except SQLAlchemyError as e:
-            sesion.rollback()
-            print(f"Error: {e}")
+        valida_publicacion(usuario)
     else:
         print("Este usuario no existe, por favor intentálo nuevamente")
 
+
+
+
 def realizar_comentario():
-    pass
+    nombre_usuario = input("Ingresa tu nombre de usuario: ")
+    usuario = sesion.query(Usuario).filter_by(nombre_usuario=nombre_usuario).first()
+    if usuario:
+        id_publi = int(input("Ingresa la ID de la públicación a comentar: "))
+        publicacion = sesion.query(Publicacion).filter_by(id_publicacion=id_publi).first()
+        if publicacion:
+            valida_comentario(publicacion, usuario)
+        else: 
+            print("Esa públicación no existe, intentálo nuevamente")
+    else:
+        print("Este usuario no existe, por favor intentálo nuevamente")
 
 
-def enviar_solicitudamista():
+
+
+def enviar_solicitudamistad():
     pass
