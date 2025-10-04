@@ -12,7 +12,7 @@ CREATE TABLE IF NOT EXISTS usuario (
 
 CREATE TABLE IF NOT EXISTS amistad (
     id_amistad INT AUTO_INCREMENT,
-    fecha_amistad DATETIME NOT NULL,
+    fecha_amistad DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
     id_primer_usuario INT NOT NULL,
     id_segundo_usuario INT NOT NULL,
 
@@ -28,7 +28,7 @@ CREATE TABLE IF NOT EXISTS amistad (
 CREATE TABLE IF NOT EXISTS publicacion(
     id_publicacion INT AUTO_INCREMENT,
     contenido_publicacion TEXT NOT NULL,
-    fecha_publicacion DATETIME NOT NULL,
+    fecha_publicacion DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
     id_usuario INT NOT NULL,
 
     CONSTRAINT pk_publicacion PRIMARY KEY (id_publicacion),
@@ -55,7 +55,7 @@ CREATE TABLE IF NOT EXISTS comentario (
 CREATE TABLE IF NOT EXISTS mensaje (
     id_mensaje INT AUTO_INCREMENT,
     contenido_mensaje TEXT NOT NULL,
-    fecha_mensaje DATETIME NOT NULL,
+    fecha_mensaje DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
     id_primer_usuario INT NOT NULL,
     id_segundo_usuario INT NOT NULL,
 
@@ -69,7 +69,7 @@ CREATE TABLE IF NOT EXISTS mensaje (
 
 CREATE TABLE IF NOT EXISTS me_gusta (
     id_megusta INT AUTO_INCREMENT,
-    fecha_megusta DATETIME NOT NULL,
+    fecha_megusta DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
     id_publicacion INT NOT NUll,
     id_usuario INT NOT NULL,
 
