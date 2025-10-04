@@ -20,7 +20,8 @@ def app():
             realizar_publicacion()
     
         elif opcion == '3':
-            pass
+            realizar_comentario()
+
         elif opcion == '4':
             pass
         elif opcion == '5':
