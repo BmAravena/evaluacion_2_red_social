@@ -1,13 +1,11 @@
-import mysql.connector
+from sqlalchemy import create_engine
+from sqlalchemy.orm import sessionmaker
 
 
 try:
-    db  = mysql.connector.connect()
-    host="localhost",        # O la IP/host de tu servidor MySQL
-    user="root",       # usuario de la BD
-    password="",    # contraseña del usuario
-    database="red_social"   # nombre de la base de datos
-    mycursor = db.cursor()
+    cadena_conexion = "mysql+mysqlconnector://root:@localhost:3306/red_social"
+    motor_db = create_engine(cadena_conexion)
+    Session = sessionmaker(bind=motor_db)
 
 except Exception as e:
     print(f"Error {e}")
