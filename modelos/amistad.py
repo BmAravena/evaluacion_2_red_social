@@ -1,12 +1,14 @@
-from modelos.usuario import Usuario
+from sqlalchemy import Column, Integer, String, Boolean, ForeignKey, CURRENT_TIMESTAMP
+from modelos.base import BaseModel
 
 
-class Amistad(Usuario):
-    def __init__(self, id_primer_usuario, id_segundo_usuario, id_amistad, fecha_amistad):
-        super().__init__(id_primer_usuario) # type: ignore
-        super().__init__(id_segundo_usuario) # type: ignore
-        id_amistad = id_amistad
-        fecha_amistad = fecha_amistad
+class Amistad(BaseModel):
+    id_amistad = Column(Integer, primary_key=True)
+    fecha_amistad = Column(DateTime=CURRENT_TIMESTAMP)
+    id_primer_usuario = Column(Integer, ForeignKey('usuario.id_usuario'))
+    id_segundo_usuario = Column(Integer, ForeignKey('usuario.id_usuario'))
+
+
 
 
 

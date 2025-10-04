@@ -1,11 +1,14 @@
-from modelos.publicacion import Publicacion
-from modelos.usuario import Usuario
+from sqlalchemy import Column, Integer, String, Boolean, ForeignKey, Text, CURRENT_TIMESTAMP
+from modelos.base import BaseModel
 
-class Comentario(Publicacion, Usuario):
-    def __init__(self, id_publicacion, id_usuario, id_comentario, comentario):
-        super().__init__(id_publicacion) # type: ignore
-        super().__init__(id_usuario) # type: ignore
-        self.id_comentario = id_comentario
-        self.id_comentario = comentario
+
+class Comentario(BaseModel):
+    id_comentario = Column(Integer, primary_key=True)
+    comentario = Column(Text)
+    id_publicacion = Column(Integer, ForeignKey('publicacion.id_publicacion'))
+    id_usuario = Column(Integer, ForeignKey('usuario.id_usuario'))
+
+
+
         
     

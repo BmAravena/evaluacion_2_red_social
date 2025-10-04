@@ -1,8 +1,10 @@
-from modelos.usuario import Usuario
+from sqlalchemy import Column, Integer, String, Boolean, ForeignKey, Text, CURRENT_TIMESTAMP
+from modelos.base import BaseModel
 
-class Publicacion(Usuario):
-    def __init__(self, id_usuario, id_publicacion, contenido_publicacion, fecha_publicacion):
-        super().__init__(id_usuario) # type: ignore
-        self.id_publicacion = id_publicacion
-        self.contenido_publicacion = contenido_publicacion
-        self.fecha_publicacion = fecha_publicacion
+
+class Publicacion(BaseModel):
+    id_publicacion = Column(Integer, primary_key=True)
+    contenido_publicacion = Column(Text)
+    fecha_publicacion = Column(DateTime=CURRENT_TIMESTAMP)
+    id_usuario = Column(Integer, ForeignKey('usuario.id_usuario'))
+

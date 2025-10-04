@@ -1,9 +1,12 @@
-from modelos.usuario import Usuario
+from sqlalchemy import Column, Integer, String, Boolean, ForeignKey, Text, CURRENT_TIMESTAMP
+from modelos.base import BaseModel
 
-class Mensaje(Usuario):
-    def __init__(self, id_primer_usuario, id_segundo_usuario, id_mensaje, contenido_mensaje, fecha_mensaje):
-        super().__init__(id_primer_usuario) # type: ignore
-        super().__init__(id_segundo_usuario) # type: ignore
-        self.id_mensaje = id_mensaje
-        self.contenido_mensaje = contenido_mensaje
-        self.fecha_mensaje = fecha_mensaje
+
+class Mensaje(BaseModel):
+    id_mensaje = Column(Integer, primary_key=True)
+    contenido_mensaje = Column(Text)
+    fecha_mensaje = Column(DateTime=CURRENT_TIMESTAMP)
+    id_primer_usuario = Column(Integer, ForeignKey('usuario.id_usuario'))
+    id_segundo_usuario = Column(Integer, ForeignKey('usuario.id_usuario'))
+
+
