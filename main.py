@@ -14,19 +14,7 @@ def app():
         print()
         opcion = input("Ingrese opción[0-7]: ")
         if opcion == '1':
-            usuario = input("Ingresa nombre de usuario: ")
-            existe_usuario = sesion.query(Usuario).filter_by(nombre_usuario=usuario).first()
-            if not existe_usuario:
-                mail = input("Ingresa el correo: ")
-                existe_correo = sesion.query(Usuario).filter_by(correo=mail).first()
-                if not existe_correo:
-                    contrasenha = input("Ingresa una contraseña: ")
-                    nuevo_usuario = Usuario(nombre_usuario=usuario, contrasenha=contrasenha, correo=mail)
-                    registrar_usuario(nuevo_usuario)
-                else:
-                    print("Este correo ya está registrado, por favor intentálo nuevamente")
-            else:
-                print("Este nombre de usuario ya está registrado, por favor intentálo nuevamente")
+            registrar_usuario()
 
         elif opcion == '2':
             pass
