@@ -12,6 +12,7 @@ CREATE TABLE IF NOT EXISTS usuario (
 
 CREATE TABLE IF NOT EXISTS amistad (
     id_amistad INT AUTO_INCREMENT,
+    estado VARCHAR(25),
     fecha_amistad DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
     id_primer_usuario INT NOT NULL,
     id_segundo_usuario INT NOT NULL,
