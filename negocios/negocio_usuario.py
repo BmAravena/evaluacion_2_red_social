@@ -4,10 +4,14 @@ from modelos.usuario import Usuario
 from modelos.publicacion import Publicacion
 from negocios.negocio_publicacion import valida_publicacion
 from negocios.negocio_comentario import valida_comentario
-
+from negocios.negocio_amistad import enviar_solicitud, responder_solicitud
+from auxiliares.info_app import nombre_aplicacion
 
 sesion = Session()
     
+def validador_de_identidad():
+    nombre_usuario = input("Ingresa tu nombre de usuario: ")
+    usuario = sesion.query(Usuario).filter_by(nombre_usuario=nombre_usuario).first()
 
 def registrar_usuario():
     usuario = input("Ingresa nombre de usuario: ")
@@ -62,5 +66,18 @@ def realizar_comentario():
 
 
 
-def enviar_solicitudamistad():
-    pass
+def enviar_solicitud_amistad():
+    nombre_usuario = input("Ingresa tu nombre de usuario: ")
+    usuario = sesion.query(Usuario).filter_by(nombre_usuario=nombre_usuario).first()
+    if usuario:
+        receptor = input("¿A quién deseas agregar?: ")
+        receptor_validado = sesion.query(Usuario).filter_by(nombre_usuario=receptor).first()
+        if receptor_validado:
+            enviar_solicitud(usuario.id_usuario, receptor_validado.id_usuario)
+        else:
+            print(f"Este usuario no se encuentra registrado en {nombre_aplicacion}")
+    else:
+        print("No estás registrado")
+
+def aceptar_solicitud_amistad(id_emisor):
+    responder_solicitud(id_emisor)
