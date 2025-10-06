@@ -1,6 +1,6 @@
 from iu.menu_principal import menu_principal
 from datos.conexion import Session
-from negocios.negocio_usuario import registrar_usuario, realizar_publicacion, realizar_comentario, enviar_solicitud_amistad
+from negocios.negocio_usuario import registrar_usuario, realizar_publicacion, realizar_comentario, enviar_solicitud_amistad, aceptar_solicitud_amistad
 from negocios.negocio_amistad import responder_solicitud
 
 sesion = Session()
@@ -22,10 +22,12 @@ def app():
             realizar_comentario()
 
         elif opcion == '4':
-            solicitud = enviar_solicitud_amistad()
+            #solicitud = enviar_solicitud_amistad()
+            enviar_solicitud_amistad()
 
         elif opcion == '5':
-            responder_solicitud(solicitud)
+            #responder_solicitud(solicitud)
+            aceptar_solicitud_amistad()
 
         elif opcion == '6':
             pass

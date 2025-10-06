@@ -24,19 +24,28 @@ def enviar_solicitud(id_emisor, id_receptor):
 
 
 
-def responder_solicitud(id_amistad, aceptar=True):
-    solicitud = sesion.query(Amistad).filter_by(id=id_amistad).first()
+def responder_solicitud(id_receptor, aceptar=True):
+    #solicitud = sesion.query(Amistad).filter_by(id_primer_usuario=id_receptor).first()
 
-    if solicitud:
-        if aceptar:
-            solicitud.estado = "aceptada"
+    estado = sesion.query(Amistad).filter_by(estado="pendiente").first()
+    msg = ""
+    if estado:
+        usuario = sesion.query(Usuario).filter_by(id_usuario=estado.id_primer_usuario).first()
+
+        confirmar = input(f"{usuario.nombre_usuario} te ha enviado una solicitud de amistad, ¿Deseas aceptar la solicitud de amistad?: ")
+        if confirmar == 'si':
+            estado.estado = "aceptada"
+            print(f"Solicitud aceptada, ahora eres amigo de {usuario.nombre_usuario}")
+              
+        elif confirmar == "no":
+            estado.estado = "rechazada"
+            print(f"Solicitud rechazada")
+
         else:
-            solicitud.estado = "rechazada"
-      
+            print("Respuesta no válida")
+
         sesion.commit()
-        print(f"Solicitud aceptada")
+
 
     else:
-        print("No se encontró la solicitud")
-
-
+        print("No tienes solicitudes pendientes")

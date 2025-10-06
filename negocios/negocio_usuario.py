@@ -74,10 +74,17 @@ def enviar_solicitud_amistad():
         receptor_validado = sesion.query(Usuario).filter_by(nombre_usuario=receptor).first()
         if receptor_validado:
             enviar_solicitud(usuario.id_usuario, receptor_validado.id_usuario)
+            return usuario
         else:
             print(f"Este usuario no se encuentra registrado en {nombre_aplicacion}")
     else:
         print("No estás registrado")
 
-def aceptar_solicitud_amistad(id_emisor):
-    responder_solicitud(id_emisor)
+
+def aceptar_solicitud_amistad():
+    usuario = input("Ingresa tu nombre de usuario: ")
+    usuario_encontrado = sesion.query(Usuario).filter_by(nombre_usuario=usuario).first()
+    if usuario_encontrado:
+        responder_solicitud(usuario_encontrado.id_usuario)
+    else:
+        print("Este usuario no existe, por favor intentálo nuevamente")
