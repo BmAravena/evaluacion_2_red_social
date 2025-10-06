@@ -25,27 +25,32 @@ def enviar_solicitud(id_emisor, id_receptor):
 
 
 def responder_solicitud(id_receptor, aceptar=True):
-    #solicitud = sesion.query(Amistad).filter_by(id_primer_usuario=id_receptor).first()
+    solicitud = sesion.query(Amistad).filter_by(id_segundo_usuario=id_receptor).first()
+ 
+    if solicitud:
+        #estado = sesion.query(Amistad).filter_by(estado="pendiente").first()
+        msg = ""
+        if solicitud.estado == 'pendiente':
+            usuario = sesion.query(Usuario).filter_by(id_usuario=solicitud.id_primer_usuario).first()
 
-    estado = sesion.query(Amistad).filter_by(estado="pendiente").first()
-    msg = ""
-    if estado:
-        usuario = sesion.query(Usuario).filter_by(id_usuario=estado.id_primer_usuario).first()
+            confirmar = input(f"{usuario.nombre_usuario} te ha enviado una solicitud de amistad, ¿Deseas aceptar la solicitud de amistad?: ")
 
-        confirmar = input(f"{usuario.nombre_usuario} te ha enviado una solicitud de amistad, ¿Deseas aceptar la solicitud de amistad?: ")
-        if confirmar == 'si':
-            estado.estado = "aceptada"
-            print(f"Solicitud aceptada, ahora eres amigo de {usuario.nombre_usuario}")
-              
-        elif confirmar == "no":
-            estado.estado = "rechazada"
-            print(f"Solicitud rechazada")
+            if confirmar == 'si':
+                solicitud.estado = "aceptada"
+                print(f"Solicitud aceptada, ahora eres amigo de {usuario.nombre_usuario}")
+                
+            elif confirmar == "no":
+                solicitud.estado = "rechazada"
+                print(f"Solicitud rechazada")
+
+            else:
+                print("Respuesta no válida")
+
+            sesion.commit()
+
 
         else:
-            print("Respuesta no válida")
-
-        sesion.commit()
-
-
+            print("Esta solicitud no está pendiente")
+            
     else:
-        print("No tienes solicitudes pendientes")
+        print("No tines solicitudes pendientes")
