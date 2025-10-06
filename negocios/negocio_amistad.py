@@ -2,6 +2,7 @@ from datos.conexion import Session
 from sqlalchemy.exc import SQLAlchemyError
 from modelos.amistad import Amistad
 from modelos.usuario import Usuario
+from sqlalchemy import or_, and_
 
 sesion = Session()
 
@@ -9,7 +10,15 @@ sesion = Session()
 
 def enviar_solicitud(id_emisor, id_receptor):
     if not id_emisor == id_receptor:
-        existente = sesion.query(Amistad).filter_by(id_primer_usuario=id_emisor, id_segundo_usuario=id_receptor).first()
+        existente = (
+    sesion.query(Amistad)
+    .filter(
+        or_(
+            and_(Amistad.id_primer_usuario == id_emisor, Amistad.id_segundo_usuario == id_receptor),
+            and_(Amistad.id_primer_usuario == id_receptor, Amistad.id_segundo_usuario == id_emisor)
+        )
+    )
+    .first() )
 
         if not existente:
             solicitud = Amistad(id_primer_usuario=id_emisor, id_segundo_usuario=id_receptor, estado="pendiente")
@@ -51,6 +60,6 @@ def responder_solicitud(id_receptor, aceptar=True):
 
         else:
             print("Esta solicitud no está pendiente")
-            
+
     else:
         print("No tines solicitudes pendientes")

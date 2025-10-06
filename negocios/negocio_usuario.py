@@ -6,22 +6,38 @@ from negocios.negocio_publicacion import valida_publicacion
 from negocios.negocio_comentario import valida_comentario
 from negocios.negocio_amistad import enviar_solicitud, responder_solicitud
 from auxiliares.info_app import nombre_aplicacion
+from datos.obtener_datos import obtener_datos
 
 sesion = Session()
     
 def validador_de_identidad():
     nombre_usuario = input("Ingresa tu nombre de usuario: ")
-    usuario = sesion.query(Usuario).filter_by(nombre_usuario=nombre_usuario).first()
+    usuario = obtener_datos(Usuario)
+
+
+def buscar_usuario(info_usuario):
+    usuarios = obtener_datos(Usuario) # Lista
+    usuario = Usuario # Emisor
+    for user in usuarios:
+        if user.nombre_usuario == info_usuario:
+            usuario = user
+            return usuario
+        elif user.correo == info_usuario:
+            usuario = user
+            return usuario
+
 
 def registrar_usuario():
-    usuario = input("Ingresa nombre de usuario: ")
-    existe_usuario = sesion.query(Usuario).filter_by(nombre_usuario=usuario).first()
-    if not existe_usuario:
-        mail = input("Ingresa el correo: ")
-        existe_correo = sesion.query(Usuario).filter_by(correo=mail).first()
-        if not existe_correo:
+    nombre_usuario_registro = input("Ingresa nombre de usuario: ")
+    usuario = buscar_usuario(nombre_usuario_registro)
+
+    if not usuario:
+        correo_usuario_registro = input("Ingresa el correo: ")
+        mail = buscar_usuario(correo_usuario_registro)
+
+        if not mail:
             contrasenha = input("Ingresa una contraseña: ")
-            nuevo_usuario = Usuario(nombre_usuario=usuario, contrasenha=contrasenha, correo=mail)
+            nuevo_usuario = Usuario(nombre_usuario=nombre_usuario_registro, contrasenha=contrasenha, correo=correo_usuario_registro)
             try:
                 sesion.add(nuevo_usuario)
                 sesion.commit()
@@ -41,7 +57,8 @@ def registrar_usuario():
 
 def realizar_publicacion():
     nombre_usuario = input("Ingresa tu nombre de usuario: ")
-    usuario = sesion.query(Usuario).filter_by(nombre_usuario=nombre_usuario).first()
+    usuario = buscar_usuario(nombre_usuario)
+
     if usuario:
         valida_publicacion(usuario)
     else:
@@ -52,10 +69,21 @@ def realizar_publicacion():
 
 def realizar_comentario():
     nombre_usuario = input("Ingresa tu nombre de usuario: ")
-    usuario = sesion.query(Usuario).filter_by(nombre_usuario=nombre_usuario).first()
+
+    usuarios = obtener_datos(Usuario) # Lista
+    usuario = Usuario # Emisor
+    for user in usuarios:
+        if user.nombre_usuario == nombre_usuario:
+            usuario = user
+
     if usuario:
+        publicaciones = obtener_datos(Publicacion)
+        publicacion = Publicacion
         id_publi = int(input("Ingresa la ID de la públicación a comentar: "))
-        publicacion = sesion.query(Publicacion).filter_by(id_publicacion=id_publi).first()
+        for pub in publicaciones:
+            if pub.id_publicacion == id_publi:
+                publicacion = pub
+
         if publicacion:
             valida_comentario(publicacion, usuario)
         else: 
@@ -67,14 +95,25 @@ def realizar_comentario():
 
 
 def enviar_solicitud_amistad():
-    nombre_usuario = input("Ingresa tu nombre de usuario: ")
-    usuario = sesion.query(Usuario).filter_by(nombre_usuario=nombre_usuario).first()
-    if usuario:
+    buscar_usuario = input("Ingresa tu nombre de usuario: ")
+
+    usuarios = obtener_datos(Usuario) # Lista
+    usuario_e = Usuario # Emisor
+    for user in usuarios:
+        if user.nombre_usuario == buscar_usuario:
+            usuario_e = user
+            
+    if usuario_e:
         receptor = input("¿A quién deseas agregar?: ")
-        receptor_validado = sesion.query(Usuario).filter_by(nombre_usuario=receptor).first()
-        if receptor_validado:
-            enviar_solicitud(usuario.id_usuario, receptor_validado.id_usuario)
-            return usuario
+        usuario_r = Usuario # Receptor
+        for user in usuarios:
+            if user.nombre_usuario == receptor:
+                usuario_r = user
+
+        if usuario_r:
+            enviar_solicitud(usuario_e.id_usuario, usuario_r.id_usuario)
+            return usuario_r
+        
         else:
             print(f"Este usuario no se encuentra registrado en {nombre_aplicacion}")
     else:
@@ -82,9 +121,13 @@ def enviar_solicitud_amistad():
 
 
 def aceptar_solicitud_amistad():
-    usuario = input("Ingresa tu nombre de usuario: ")
-    usuario_encontrado = sesion.query(Usuario).filter_by(nombre_usuario=usuario).first()
-    if usuario_encontrado:
-        responder_solicitud(usuario_encontrado.id_usuario)
+    buscar_usuario = input("Ingresa tu nombre de usuario: ")
+    usuarios = obtener_datos(Usuario) # Lista
+    for user in usuarios:
+        if user.nombre_usuario == buscar_usuario:
+            usuario = user
+
+    if usuario:
+        responder_solicitud(usuario.id_usuario)
     else:
         print("Este usuario no existe, por favor intentálo nuevamente")
