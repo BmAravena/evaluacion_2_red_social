@@ -3,9 +3,25 @@ from sqlalchemy.exc import SQLAlchemyError
 from modelos.amistad import Amistad
 from modelos.usuario import Usuario
 from sqlalchemy import or_, and_
+from datos.obtener_datos import obtener_datos
+from prettytable import PrettyTable
+
 
 sesion = Session()
 
+
+
+
+
+
+def valida_amistad(emisor, receptor):
+    amistad = Amistad
+    amistades = obtener_datos(amistad)
+    for am in amistades:
+        if (am.id_primer_usuario == emisor.id_usuario and am.id_segundo_usuario == receptor.id_usuario) or (am.id_primer_usuario == receptor.id_usuario and am.id_segundo_usuario == emisor.id_usuario):
+            return True
+        
+    return False
 
 
 def enviar_solicitud(id_emisor, id_receptor):

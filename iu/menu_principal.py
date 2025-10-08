@@ -10,5 +10,6 @@ def menu_principal():
     print("[4] Enviar solicitud")
     print("[5] Aceptar solicitud")
     print("[6] Enviar mensaje")
-    print("[7] Dar me gusta")
+    print("[7] Ver mensaje")
+    print("[8] Dar me gusta")
     print("[0] Salir del sistema")

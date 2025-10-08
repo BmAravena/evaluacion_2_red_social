@@ -4,9 +4,11 @@ from modelos.usuario import Usuario
 from modelos.publicacion import Publicacion
 from negocios.negocio_publicacion import valida_publicacion
 from negocios.negocio_comentario import valida_comentario
-from negocios.negocio_amistad import enviar_solicitud, responder_solicitud
+from negocios.negocio_amistad import enviar_solicitud, responder_solicitud, valida_amistad
 from auxiliares.info_app import nombre_aplicacion
 from datos.obtener_datos import obtener_datos
+from negocios.negocio_mensaje import valida_envia_mensaje
+
 
 sesion = Session()
     
@@ -131,3 +133,17 @@ def aceptar_solicitud_amistad():
         responder_solicitud(usuario.id_usuario)
     else:
         print("Este usuario no existe, por favor intentálo nuevamente")
+
+
+def enviar_mensaje():
+    nombre_usuario_emisor = input("Ingresa tu nombre de usuario: ")
+    usuario_e = buscar_usuario(nombre_usuario_emisor)
+    if usuario_e:
+        nombre_usuario_receptor = input("¿A quién deseas enviar un mensaje(dentro de tus amigos)?: ")
+        usuario_r = buscar_usuario(nombre_usuario_receptor)
+        amistad_validada = valida_amistad(usuario_e, usuario_r)
+        if amistad_validada:
+            valida_envia_mensaje(usuario_e, usuario_r)
+        else:
+            print(f"No es posible enviar un mensaje a {nombre_usuario_receptor}, porque no son amigos ")
+
