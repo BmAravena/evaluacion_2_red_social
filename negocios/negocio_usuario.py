@@ -147,3 +147,10 @@ def enviar_mensaje():
         else:
             print(f"No es posible enviar un mensaje a {nombre_usuario_receptor}, porque no son amigos ")
 
+
+def ver_mensajes():
+    nombre_usuario = input("Ingresa tu nombre de usuario: ")
+    usuario = buscar_usuario(nombre_usuario)
+    if usuario:
+        pass
+
