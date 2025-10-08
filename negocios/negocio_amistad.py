@@ -4,12 +4,9 @@ from modelos.amistad import Amistad
 from modelos.usuario import Usuario
 from sqlalchemy import or_, and_
 from datos.obtener_datos import obtener_datos
-from prettytable import PrettyTable
 
 
 sesion = Session()
-
-
 
 
 
