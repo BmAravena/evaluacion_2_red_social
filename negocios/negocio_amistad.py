@@ -9,8 +9,6 @@ from datos.obtener_datos import obtener_datos
 sesion = Session()
 
 
-
-
 def valida_amistad(emisor, receptor):
     amistad = Amistad
     amistades = obtener_datos(amistad)
@@ -46,33 +44,59 @@ def enviar_solicitud(id_emisor, id_receptor):
 
 
 
-def responder_solicitud(id_receptor, aceptar=True):
-    solicitud = sesion.query(Amistad).filter_by(id_segundo_usuario=id_receptor).first()
- 
-    if solicitud:
-        #estado = sesion.query(Amistad).filter_by(estado="pendiente").first()
-        msg = ""
-        if solicitud.estado == 'pendiente':
-            usuario = sesion.query(Usuario).filter_by(id_usuario=solicitud.id_primer_usuario).first()
+def responder_solicitud(id_receptor):
 
-            confirmar = input(f"{usuario.nombre_usuario} te ha enviado una solicitud de amistad, ¿Deseas aceptar la solicitud de amistad?: ")
+    while True:
+        # Obtener todas las solicitudes y filtrar pendientes para este usuario
+        solicitudes = obtener_datos(Amistad)
+        pendientes = [
+            s for s in solicitudes
+            if s.id_segundo_usuario == id_receptor and s.estado.lower().strip() == "pendiente"
+        ]
 
-            if confirmar == 'si':
-                solicitud.estado = "aceptada"
-                print(f"Solicitud aceptada, ahora eres amigo de {usuario.nombre_usuario}")
-                
-            elif confirmar == "no":
-                solicitud.estado = "rechazada"
-                print(f"Solicitud rechazada")
+        if not pendientes:
+            print("No tienes más solicitudes pendientes.")
+            break  # Salir del bucle cuando no queden pendientes
 
-            else:
-                print("Respuesta no válida")
+        # Procesar la primera solicitud pendiente
+        solicitud = pendientes[0]
 
+        # Buscar usuario que envió la solicitud
+        usuarios_filtrados = [
+            u for u in obtener_datos(Usuario) if u.id_usuario == solicitud.id_primer_usuario
+        ]
+
+        if not usuarios_filtrados:
+            print(f"No se encontró el usuario que envió la solicitud con ID {solicitud.id_primer_usuario}.")
+            # Marcar la solicitud como "rechazada automáticamente" o saltar
+            solicitud.estado = "rechazada"
             sesion.commit()
+            continue
 
+        usuario = usuarios_filtrados[0]
 
+        # Preguntar al receptor si acepta o rechaza
+        confirmar = input(
+            f"{usuario.nombre_usuario} te ha enviado una solicitud de amistad. ¿Deseas aceptar? (si/no): "
+        ).strip().lower()
+
+        if confirmar == "si":
+            solicitud.estado = "aceptada"
+            print(f"✅ Solicitud aceptada. Ahora eres amigo de {usuario.nombre_usuario}.")
+        elif confirmar == "no":
+            solicitud.estado = "rechazada"
+            print(f"❌ Solicitud rechazada de {usuario.nombre_usuario}.")
         else:
-            print("Esta solicitud no está pendiente")
+            print("⚠️ Respuesta no válida. La solicitud se mantiene pendiente.")
+            continue  # No commit, vuelve a preguntar si quieres
 
-    else:
-        print("No tines solicitudes pendientes")
+        # Guardar cambios en la DB inmediatamente
+        try:
+            sesion.commit()
+        except Exception as e:
+            sesion.rollback()
+            print(f"Error al guardar cambios: {e}")
+            break
+
+
+ 

@@ -12,9 +12,11 @@ from negocios.negocio_mensaje import valida_envia_mensaje
 
 sesion = Session()
     
+
 def validador_de_identidad():
     nombre_usuario = input("Ingresa tu nombre de usuario: ")
     usuario = obtener_datos(Usuario)
+    return usuario
 
 
 def buscar_usuario(info_usuario):
