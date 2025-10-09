@@ -1,8 +1,9 @@
 from iu.menu_principal import menu_principal
 from datos.conexion import Session
-from negocios.negocio_usuario import registrar_usuario, realizar_publicacion, realizar_comentario, enviar_solicitud_amistad, aceptar_solicitud_amistad, enviar_mensaje
-from negocios.negocio_amistad import responder_solicitud
+from negocios.negocio_usuario import registrar_usuario, realizar_publicacion, realizar_comentario, enviar_solicitud_amistad, aceptar_solicitud_amistad, enviar_mensaje, ver_mensaje
+#from negocios.negocio_amistad import responder_solicitud
 from negocios.negocio_publicacion import visualizar_publicaciones
+#from negocios.negocio_mensaje import visualizar_mensajes
 
 sesion = Session()
 
@@ -12,7 +13,7 @@ def app():
         print(f"\nBienvenido a")
         menu_principal()    
         print()
-        opcion = input("Ingrese opción[0-7]: ")
+        opcion = input("Ingrese opción[0-7]: ").strip()
         if opcion == '1':
             registrar_usuario()
 
@@ -34,7 +35,7 @@ def app():
             enviar_mensaje()
 
         elif opcion == '7':
-            pass
+            ver_mensaje()
 
         elif opcion == '8':
             pass

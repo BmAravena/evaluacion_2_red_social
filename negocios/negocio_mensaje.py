@@ -2,8 +2,26 @@ from datos.conexion import Session
 from sqlalchemy.exc import SQLAlchemyError
 from modelos.usuario import Usuario
 from modelos.mensaje import Mensaje
+from prettytable import PrettyTable
+from datos.obtener_datos import obtener_datos
 
 sesion = Session()
+
+
+def visualizar_mensajes(id):
+    tabla_mensajes = PrettyTable()
+    tabla_mensajes.field_names = ['contenido_mensaje', 'fecha_mensaje']
+
+    mensajes = obtener_datos(Mensaje)
+
+    if mensajes:
+        for mensaje in mensajes:
+            if mensaje.id_primer_usuario == id:
+                tabla_mensajes.add_row([mensaje.contenido_mensaje, mensaje.fecha_mensaje])
+
+    print(tabla_mensajes)
+
+    
 
 def valida_envia_mensaje(emisor, receptor):
     try:

@@ -7,7 +7,7 @@ from negocios.negocio_comentario import valida_comentario
 from negocios.negocio_amistad import enviar_solicitud, responder_solicitud, valida_amistad
 from auxiliares.info_app import nombre_aplicacion
 from datos.obtener_datos import obtener_datos
-from negocios.negocio_mensaje import valida_envia_mensaje
+from negocios.negocio_mensaje import valida_envia_mensaje, visualizar_mensajes
 
 
 sesion = Session()
@@ -150,9 +150,10 @@ def enviar_mensaje():
             print(f"No es posible enviar un mensaje a {nombre_usuario_receptor}, porque no son amigos ")
 
 
-def ver_mensajes():
+def ver_mensaje():
     nombre_usuario = input("Ingresa tu nombre de usuario: ")
     usuario = buscar_usuario(nombre_usuario)
     if usuario:
-        pass
+        visualizar_mensajes(usuario.id_usuario)
+
 
