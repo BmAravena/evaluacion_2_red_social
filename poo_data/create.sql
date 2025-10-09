@@ -26,7 +26,7 @@ CREATE TABLE IF NOT EXISTS amistad (
 
 
 
-CREATE TABLE IF NOT EXISTS publicacion(
+CREATE TABLE IF NOT EXISTS publicacion (
     id_publicacion INT AUTO_INCREMENT,
     contenido_publicacion TEXT NOT NULL,
     fecha_publicacion DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,

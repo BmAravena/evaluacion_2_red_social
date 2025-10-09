@@ -2,7 +2,7 @@ from sqlalchemy import Column, Integer, String, Boolean, ForeignKey, DateTime, f
 from modelos.base import BaseModel
 
 
-class Megusta(BaseModel):
+class Me_gusta(BaseModel):
     id_megusta = Column(Integer, primary_key=True)
     fecha_megusta = Column(DateTime, server_default=func.now())
     id_publicacion = Column(Integer, ForeignKey('publicacion.id_publicacion'))

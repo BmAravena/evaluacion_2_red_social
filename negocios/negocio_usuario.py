@@ -2,12 +2,14 @@ from datos.conexion import Session
 from sqlalchemy.exc import SQLAlchemyError
 from modelos.usuario import Usuario
 from modelos.publicacion import Publicacion
-from negocios.negocio_publicacion import valida_publicacion
+from modelos.megusta import Me_gusta
+from negocios.negocio_publicacion import valida_publicacion, visualizar_publicaciones
 from negocios.negocio_comentario import valida_comentario
 from negocios.negocio_amistad import enviar_solicitud, responder_solicitud, valida_amistad
 from auxiliares.info_app import nombre_aplicacion
 from datos.obtener_datos import obtener_datos
 from negocios.negocio_mensaje import valida_envia_mensaje, visualizar_mensajes
+
 
 
 sesion = Session()
@@ -155,5 +157,24 @@ def ver_mensaje():
     usuario = buscar_usuario(nombre_usuario)
     if usuario:
         visualizar_mensajes(usuario.id_usuario)
+
+
+
+def dar_megusta():
+    nombre_usuario = input("Ingresa tu nombre de usuario: ")
+    usuario = buscar_usuario(nombre_usuario)
+    id_usuario = usuario.id_usuario
+
+    if usuario:
+        visualizar_publicaciones()
+        opcion = int(input("¿A que públicación deseas darle me gusta(ID)?: "))
+        publicaciones = obtener_datos(Publicacion)
+        for pub in publicaciones:
+            if pub.id_publicacion == opcion:
+                megusta = Me_gusta(id_publicacion=opcion, id_usuario=id_usuario)
+                print(f"Haz dado me gusta a {pub.contenido_publicacion} correctamente...")
+
+        sesion.add(megusta)
+        sesion.commit()
 
 

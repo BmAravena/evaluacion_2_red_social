@@ -1,6 +1,6 @@
 from iu.menu_principal import menu_principal
 from datos.conexion import Session
-from negocios.negocio_usuario import registrar_usuario, realizar_publicacion, realizar_comentario, enviar_solicitud_amistad, aceptar_solicitud_amistad, enviar_mensaje, ver_mensaje
+from negocios.negocio_usuario import registrar_usuario, realizar_publicacion, realizar_comentario, enviar_solicitud_amistad, aceptar_solicitud_amistad, enviar_mensaje, ver_mensaje, dar_megusta
 #from negocios.negocio_amistad import responder_solicitud
 from negocios.negocio_publicacion import visualizar_publicaciones
 #from negocios.negocio_mensaje import visualizar_mensajes
@@ -38,7 +38,7 @@ def app():
             ver_mensaje()
 
         elif opcion == '8':
-            pass
+            dar_megusta()
         
         elif opcion == '9':
             visualizar_publicaciones()
