@@ -9,6 +9,7 @@ from negocios.negocio_amistad import enviar_solicitud, responder_solicitud, vali
 from auxiliares.info_app import nombre_aplicacion
 from datos.obtener_datos import obtener_datos
 from negocios.negocio_mensaje import valida_envia_mensaje, visualizar_mensajes
+from negocios.negocio_megusta import valida_megusta
 
 
 
@@ -169,12 +170,20 @@ def dar_megusta():
         visualizar_publicaciones()
         opcion = int(input("¿A que públicación deseas darle me gusta(ID)?: "))
         publicaciones = obtener_datos(Publicacion)
+
         for pub in publicaciones:
             if pub.id_publicacion == opcion:
-                megusta = Me_gusta(id_publicacion=opcion, id_usuario=id_usuario)
-                print(f"Haz dado me gusta a {pub.contenido_publicacion} correctamente...")
+                if (valida_amistad(usuario, pub)):
+                    if not(valida_megusta(pub, usuario)):
+                        megusta = Me_gusta(id_publicacion=opcion, id_usuario=id_usuario)
+                        sesion.add(megusta)
+                        sesion.commit()
+                        print(f"Haz dado me gusta a {pub.contenido_publicacion} correctamente...")
+                    else:
+                        print("Ya le diste me gusta a esta publicación")
+                else:
+                    print("No puedes darle me gusta a la publicación, porque no eres amigo de la persona que la publicó")
 
-        sesion.add(megusta)
-        sesion.commit()
+         
 
 

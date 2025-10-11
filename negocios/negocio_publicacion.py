@@ -8,6 +8,8 @@ from prettytable import PrettyTable
 sesion = Session()
 
 
+
+
 def visualizar_publicaciones():
     tabla_publicaciones = PrettyTable()
     tabla_publicaciones.field_names = ['contenido_publicacion', 'fecha_publicacion']
