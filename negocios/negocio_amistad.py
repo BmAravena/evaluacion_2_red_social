@@ -22,14 +22,14 @@ def valida_amistad(emisor, receptor):
 def enviar_solicitud(id_emisor, id_receptor):
     if not id_emisor == id_receptor:
         existente = (
-    sesion.query(Amistad)
-    .filter(
-        or_(
-            and_(Amistad.id_primer_usuario == id_emisor, Amistad.id_segundo_usuario == id_receptor),
-            and_(Amistad.id_primer_usuario == id_receptor, Amistad.id_segundo_usuario == id_emisor)
+        sesion.query(Amistad)
+        .filter(
+            or_(
+                and_(Amistad.id_primer_usuario == id_emisor, Amistad.id_segundo_usuario == id_receptor),
+                and_(Amistad.id_primer_usuario == id_receptor, Amistad.id_segundo_usuario == id_emisor)
+            )
         )
-    )
-    .first() )
+        .first() )
 
         if not existente:
             solicitud = Amistad(id_primer_usuario=id_emisor, id_segundo_usuario=id_receptor, estado="pendiente")
@@ -82,12 +82,12 @@ def responder_solicitud(id_receptor):
 
         if confirmar == "si":
             solicitud.estado = "aceptada"
-            print(f"✅ Solicitud aceptada. Ahora eres amigo de {usuario.nombre_usuario}.")
+            print(f"Solicitud aceptada. Ahora eres amigo de {usuario.nombre_usuario}.")
         elif confirmar == "no":
             solicitud.estado = "rechazada"
-            print(f"❌ Solicitud rechazada de {usuario.nombre_usuario}.")
+            print(f"Solicitud rechazada de {usuario.nombre_usuario}.")
         else:
-            print("⚠️ Respuesta no válida. La solicitud se mantiene pendiente.")
+            print("Respuesta no válida. La solicitud se mantiene pendiente.")
             continue  # No commit, vuelve a preguntar si quieres
 
         # Guardar cambios en la DB inmediatamente
