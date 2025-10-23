@@ -186,4 +186,5 @@ def dar_megusta():
 
          
 
-
+def eliminar_amistad():
+    pass
