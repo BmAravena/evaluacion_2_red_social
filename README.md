@@ -9,5 +9,27 @@ Evaluación 2 de programación orientada a objetos
     </head>
     <body>
         <h1><b> ¡IMPORTANTE! </b></h1>
+        <table>
+            <tr>
+                <th>Acción</th>
+                <th>Proceso</th>
+                <th>Prioridad</th>
+            </tr>
+            <tr>
+                <td>Crear</td>
+                <td>Crear base de datos MySql e insertar el código que se encuentra en el archivo insertar.sql de la carpeta poo_date</td>
+                <td>*****</td>
+            </tr>
+            <tr>
+                <td>Instalar</td>
+                <td>Instalar por consola: pip install SQLAlchemy para el uso de base de datos con python</td>
+                <td>*****</td>
+            </tr>
+            <tr>
+                <td>Instalar</td>
+                <td>Instalar por consola: pip install prettytable para visualizar información ordenada en una tabla por consola</td>
+                <td>***</td>
+            </tr>
+        </table>
     </body>
 </hmtl>
