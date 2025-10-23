@@ -5,7 +5,6 @@ from negocios.negocio_usuario import registrar_usuario, realizar_publicacion, re
 from negocios.negocio_publicacion import visualizar_publicaciones
 
 
-
 sesion = Session()
 
 def app():
