@@ -3,6 +3,7 @@ from sqlalchemy.exc import SQLAlchemyError
 from modelos.usuario import Usuario
 from modelos.publicacion import Publicacion
 from modelos.megusta import Me_gusta
+from modelos.amistad import Amistad
 from negocios.negocio_publicacion import valida_publicacion, visualizar_publicaciones
 from negocios.negocio_comentario import valida_comentario
 from negocios.negocio_amistad import enviar_solicitud, responder_solicitud, valida_amistad
@@ -10,6 +11,7 @@ from auxiliares.info_app import nombre_aplicacion
 from datos.obtener_datos import obtener_datos
 from negocios.negocio_mensaje import valida_envia_mensaje, visualizar_mensajes
 from negocios.negocio_megusta import valida_megusta
+
 
 
 
@@ -187,4 +189,24 @@ def dar_megusta():
          
 
 def eliminar_amistad():
-    pass
+    nombre_usuario = input("Ingresa tu nombre de usuario: ")
+    usuario = buscar_usuario(nombre_usuario)
+    id_usuario = usuario.id_usuario
+
+    amistad = Amistad
+    amistades = obtener_datos(amistad)
+    for amis in amistades:
+        if amis.id_primer_usuario == id_usuario or amis.id_segundo_usuario == id_usuario:
+            nombre_usuario_a_eliminar = input("Ingresa el nombre del usuario que deseas eliminar: ")
+            usuario_eliminar = buscar_usuario(nombre_usuario_a_eliminar)
+            if usuario_eliminar:
+                amistad_encontrada = valida_amistad(usuario, usuario_eliminar)
+                if amistad_encontrada:
+                    sesion.delete(amistad_encontrada.id_amistad)
+                    sesion.commit()
+                    print(f"Amistad con {nombre_usuario_a_eliminar} eliminada correctamente")
+                else:
+                    print(f"No eres amigo de {nombre_usuario_a_eliminar}")
+                
+
+
