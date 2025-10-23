@@ -1,9 +1,10 @@
 from iu.menu_principal import menu_principal
 from datos.conexion import Session
-from negocios.negocio_usuario import registrar_usuario, realizar_publicacion, realizar_comentario, enviar_solicitud_amistad, aceptar_solicitud_amistad, enviar_mensaje, ver_mensaje, dar_megusta
-#from negocios.negocio_amistad import responder_solicitud
+from negocios.negocio_usuario import registrar_usuario, realizar_publicacion, realizar_comentario, enviar_solicitud_amistad, aceptar_solicitud_amistad, enviar_mensaje, ver_mensaje, dar_megusta,eliminar_amistad
+
 from negocios.negocio_publicacion import visualizar_publicaciones
-#from negocios.negocio_mensaje import visualizar_mensajes
+
+
 
 sesion = Session()
 
@@ -11,7 +12,7 @@ def app():
     verdadero = True
     while verdadero:
         print(f"\nBienvenido a")
-        menu_principal()    
+        menu_principal()
         print()
         opcion = input("Ingrese opción[0-7]: ").strip()
         if opcion == '1':
@@ -24,23 +25,24 @@ def app():
             realizar_comentario()
 
         elif opcion == '4':
-            #solicitud = enviar_solicitud_amistad()
             enviar_solicitud_amistad()
 
         elif opcion == '5':
-            #responder_solicitud(solicitud)
             aceptar_solicitud_amistad()
             
         elif opcion == '6':
-            enviar_mensaje()
+            eliminar_amistad()
 
         elif opcion == '7':
-            ver_mensaje()
+            enviar_mensaje()
 
         elif opcion == '8':
-            dar_megusta()
+            ver_mensaje()
         
         elif opcion == '9':
+            dar_megusta()
+        
+        elif opcion == '10':
             visualizar_publicaciones()
 
         elif opcion == '0':
