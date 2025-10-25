@@ -199,10 +199,12 @@ def eliminar_amistad():
         if amis.id_primer_usuario == id_usuario or amis.id_segundo_usuario == id_usuario:
             nombre_usuario_a_eliminar = input("Ingresa el nombre del usuario que deseas eliminar: ")
             usuario_eliminar = buscar_usuario(nombre_usuario_a_eliminar)
+            
             if usuario_eliminar:
-                amistad_encontrada = valida_amistad(usuario, usuario_eliminar)
+                amistad_encontrada, amistad_a_borrar = valida_amistad(usuario, usuario_eliminar)
+
                 if amistad_encontrada:
-                    sesion.delete(amistad_encontrada.id_amistad)
+                    sesion.delete(sesion.merge(amistad_a_borrar))
                     sesion.commit()
                     print(f"Amistad con {nombre_usuario_a_eliminar} eliminada correctamente")
                 else:
