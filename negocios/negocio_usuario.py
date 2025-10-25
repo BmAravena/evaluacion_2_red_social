@@ -213,5 +213,24 @@ def eliminar_amistad():
                 
 
 def editar_publicacion():
-    pass
+    nombre_usuario = input("Ingresa tu nombre de usuario: ")
+    usuario = buscar_usuario(nombre_usuario)
+    id_usuario = usuario.id_usuario
+
+    id_publicacion_editar = int(input("Ingresa la id públicación que deseas editar: "))
+    publicaciones = obtener_datos(Publicacion)
+    for pub in publicaciones:
+        if pub.id_publicacion == id_publicacion_editar:
+            if pub.id_usuario == id_usuario:
+                nuevo_contenido = input("Ingresa el nuevo contenido de la publicación: ")
+                pub.contenido_publicacion = nuevo_contenido
+                sesion.commit()
+                print("Publicación editada correctamente")
+                
+    if not pub:
+        print(f"Error, la publicación con la id {id_publicacion_editar} no existe")
+    
+    if pub.id_usuario != id_usuario:
+        print("Error: esta publicación no te pertenece")
+        
 

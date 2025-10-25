@@ -13,7 +13,7 @@ def app():
         print(f"\nBienvenido a")
         menu_principal()
         print()
-        opcion = input("Ingrese opción[0-7]: ").strip()
+        opcion = input("Ingrese opción[0-11]: ").strip()
         if opcion == '1':
             registrar_usuario()
 
@@ -44,7 +44,7 @@ def app():
         elif opcion == '10':
             editar_publicacion()
 
-        elif opcion == '1':
+        elif opcion == '11':
             visualizar_publicaciones()
 
         elif opcion == '0':
