@@ -14,5 +14,6 @@ def menu_principal():
     print("[7] Enviar mensaje")
     print("[8] Ver mensaje")
     print("[9] Dar me gusta")
-    print("[10] Visualizar publicaciones")
+    print("[10] Editar publicación")
+    print("[11] Visualizar publicaciones")
     print("[0] Salir del sistema")

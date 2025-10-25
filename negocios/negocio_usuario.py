@@ -26,7 +26,8 @@ def validador_de_identidad():
 
 def buscar_usuario(info_usuario):
     usuarios = obtener_datos(Usuario) # Lista
-    usuario = Usuario # Emisor
+    #usuario = Usuario # Emisor
+    usuario = None
     for user in usuarios:
         if user.nombre_usuario == info_usuario:
             usuario = user
@@ -211,4 +212,6 @@ def eliminar_amistad():
                     print(f"No eres amigo de {nombre_usuario_a_eliminar}")
                 
 
+def editar_publicacion():
+    pass
 

@@ -1,6 +1,6 @@
 from iu.menu_principal import menu_principal
 from datos.conexion import Session
-from negocios.negocio_usuario import registrar_usuario, realizar_publicacion, realizar_comentario, enviar_solicitud_amistad, aceptar_solicitud_amistad, enviar_mensaje, ver_mensaje, dar_megusta, eliminar_amistad
+from negocios.negocio_usuario import registrar_usuario, realizar_publicacion, realizar_comentario, enviar_solicitud_amistad, aceptar_solicitud_amistad, enviar_mensaje, ver_mensaje, dar_megusta, eliminar_amistad, editar_publicacion
 
 from negocios.negocio_publicacion import visualizar_publicaciones
 
@@ -42,6 +42,9 @@ def app():
             dar_megusta()
         
         elif opcion == '10':
+            editar_publicacion()
+
+        elif opcion == '1':
             visualizar_publicaciones()
 
         elif opcion == '0':
