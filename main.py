@@ -8,7 +8,6 @@ from negocios.negocio_publicacion import visualizar_publicaciones
 def app():
     verdadero = True
     while verdadero:
-        print(f"\nBienvenido a")
         menu_principal()
         print()
         opcion = input("Ingrese opción[0-11]: ").strip()

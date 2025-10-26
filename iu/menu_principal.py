@@ -3,7 +3,7 @@ from auxiliares.version import numero_version
 
 def menu_principal():
     print("="*51)
-    print(f"Nombre: {nombre_aplicacion} Versión: {numero_version}")
+    print(f"Bienvenido a {nombre_aplicacion} V {numero_version}")
     print("="*51)
     print("[1] Registrar usuario")
     print("[2] Realizar publicación")
