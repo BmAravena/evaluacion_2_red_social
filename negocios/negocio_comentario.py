@@ -1,9 +1,7 @@
-from datos.conexion import Session
+from datos.conexion import Session, sesion
 from sqlalchemy.exc import SQLAlchemyError
 from modelos.comentario import Comentario
 
-
-sesion = Session()
 
 
 def valida_comentario(publicacion, usuario):

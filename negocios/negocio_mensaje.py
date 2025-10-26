@@ -1,11 +1,10 @@
-from datos.conexion import Session
+from datos.conexion import Session, sesion
 from sqlalchemy.exc import SQLAlchemyError
 from modelos.usuario import Usuario
 from modelos.mensaje import Mensaje
 from prettytable import PrettyTable
 from datos.obtener_datos import obtener_datos
 
-sesion = Session()
 
 
 def visualizar_mensajes(id):

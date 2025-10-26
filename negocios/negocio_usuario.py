@@ -1,4 +1,4 @@
-from datos.conexion import Session
+from datos.conexion import Session, sesion
 from sqlalchemy.exc import SQLAlchemyError
 from modelos.usuario import Usuario
 from modelos.publicacion import Publicacion
@@ -13,9 +13,6 @@ from negocios.negocio_mensaje import valida_envia_mensaje, visualizar_mensajes
 from negocios.negocio_megusta import valida_megusta
 
 
-
-
-sesion = Session()
     
 
 def validador_de_identidad():
@@ -205,7 +202,8 @@ def eliminar_amistad():
                 amistad_encontrada, amistad_a_borrar = valida_amistad(usuario, usuario_eliminar)
 
                 if amistad_encontrada:
-                    sesion.delete(sesion.merge(amistad_a_borrar))
+                    #sesion.delete(sesion.merge(amistad_a_borrar))
+                    sesion.delete(amistad_a_borrar)
                     sesion.commit()
                     print(f"Amistad con {nombre_usuario_a_eliminar} eliminada correctamente")
                 else:
@@ -215,22 +213,38 @@ def eliminar_amistad():
 def editar_publicacion():
     nombre_usuario = input("Ingresa tu nombre de usuario: ")
     usuario = buscar_usuario(nombre_usuario)
-    id_usuario = usuario.id_usuario
+    
+    if not usuario:
+        print("Usuario no encontrado.")
+        return
 
-    id_publicacion_editar = int(input("Ingresa la id públicación que deseas editar: "))
+    id_usuario = usuario.id_usuario
+    id_publicacion_editar = int(input("Ingresa la id de la publicación que deseas editar: "))
+
     publicaciones = obtener_datos(Publicacion)
+    publicacion_encontrada = None
+    una_pub = publicaciones[0]
+    print(una_pub.__dict__)
+    # Buscar la publicación
     for pub in publicaciones:
         if pub.id_publicacion == id_publicacion_editar:
-            if pub.id_usuario == id_usuario:
-                nuevo_contenido = input("Ingresa el nuevo contenido de la publicación: ")
-                pub.contenido_publicacion = nuevo_contenido
-                sesion.commit()
-                print("Publicación editada correctamente")
-                
-    if not pub:
-        print(f"Error, la publicación con la id {id_publicacion_editar} no existe")
-    
-    if pub.id_usuario != id_usuario:
-        print("Error: esta publicación no te pertenece")
+            publicacion_encontrada = pub
+            break
+
+    # Validar si existe
+    if not publicacion_encontrada:
+        print(f"Error: la publicación con la id {id_publicacion_editar} no existe.")
+        return
+
+    # Validar si pertenece al usuario
+    if publicacion_encontrada.id_usuario != id_usuario:
+        print("Error: esta publicación no te pertenece.")
+        return
+
+    # Editar publicación
+    nuevo_contenido = input("Ingresa el nuevo contenido de la publicación: ")
+    publicacion_encontrada.contenido_publicacion = nuevo_contenido
+    sesion.commit()
+    print("Publicación editada correctamente.")
         
 

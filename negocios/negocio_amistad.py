@@ -1,12 +1,10 @@
-from datos.conexion import Session
+from datos.conexion import Session, sesion
 from sqlalchemy.exc import SQLAlchemyError
 from modelos.amistad import Amistad
 from modelos.usuario import Usuario
 from sqlalchemy import or_, and_
 from datos.obtener_datos import obtener_datos
 
-
-sesion = Session()
 
 
 def valida_amistad(emisor, receptor):
