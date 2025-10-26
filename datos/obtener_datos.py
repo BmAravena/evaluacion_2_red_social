@@ -1,6 +1,6 @@
-from datos.conexion import Session
+from datos.conexion import Session, sesion
 
-sesion = Session()
+#sesion = Session()
 
 
 def obtener_datos(clase):
@@ -9,3 +9,4 @@ def obtener_datos(clase):
             return datos
     else:
         print("no hay datos")
+        return []   

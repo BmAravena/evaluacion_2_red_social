@@ -6,6 +6,7 @@ try:
     cadena_conexion = "mysql+mysqlconnector://root:@localhost:3306/red_social"
     motor_db = create_engine(cadena_conexion)
     Session = sessionmaker(bind=motor_db)
+    sesion = Session()
 
 except Exception as e:
     print(f"Error {e}")
