@@ -1,6 +1,5 @@
-from datos.conexion import Session, sesion
+from datos.conexion import sesion
 from sqlalchemy.exc import SQLAlchemyError
-from modelos.usuario import Usuario
 from modelos.mensaje import Mensaje
 from prettytable import PrettyTable
 from datos.obtener_datos import obtener_datos

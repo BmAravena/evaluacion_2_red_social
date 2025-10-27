@@ -1,6 +1,4 @@
-from datos.conexion import Session, sesion
-
-#sesion = Session()
+from datos.conexion import sesion
 
 
 def obtener_datos(clase):

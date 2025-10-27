@@ -1,5 +1,4 @@
-from datos.conexion import Session, sesion
-from sqlalchemy.exc import SQLAlchemyError
+from datos.conexion import sesion
 from modelos.amistad import Amistad
 from modelos.usuario import Usuario
 from sqlalchemy import or_, and_

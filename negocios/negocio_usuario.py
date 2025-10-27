@@ -1,4 +1,4 @@
-from datos.conexion import Session, sesion
+from datos.conexion import sesion
 from sqlalchemy.exc import SQLAlchemyError
 from modelos.usuario import Usuario
 from modelos.publicacion import Publicacion
