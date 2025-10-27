@@ -118,7 +118,8 @@ def enviar_solicitud_amistad():
                 usuario_r = user
 
         if usuario_r:
-            enviar_solicitud(usuario_e.id_usuario, usuario_r.id_usuario)
+            enviar_solicitud(usuario_e, usuario_r)
+            #enviar_solicitud(usuario_e.id_usuario, usuario_r.id_usuario)
             return usuario_r
         
         else:

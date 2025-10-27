@@ -17,19 +17,20 @@ def valida_amistad(emisor, receptor):
 
 
 def enviar_solicitud(id_emisor, id_receptor):
-    if not id_emisor == id_receptor:
-        existente = (
-        sesion.query(Amistad)
-        .filter(
-            or_(
-                and_(Amistad.id_primer_usuario == id_emisor, Amistad.id_segundo_usuario == id_receptor),
-                and_(Amistad.id_primer_usuario == id_receptor, Amistad.id_segundo_usuario == id_emisor)
-            )
-        )
-        .first() )
+    if not id_emisor.id_usuario == id_receptor.id_usuario:
+        existente = valida_amistad(id_emisor, id_receptor)
+        # existente = (
+        # sesion.query(Amistad)
+        # .filter(
+        #     or_(
+        #         and_(Amistad.id_primer_usuario == id_emisor, Amistad.id_segundo_usuario == id_receptor),
+        #         and_(Amistad.id_primer_usuario == id_receptor, Amistad.id_segundo_usuario == id_emisor)
+        #     )
+        # )
+        # .first() )
 
         if not existente:
-            solicitud = Amistad(id_primer_usuario=id_emisor, id_segundo_usuario=id_receptor, estado="pendiente")
+            solicitud = Amistad(id_primer_usuario=id_emisor.id_usuario, id_segundo_usuario=id_receptor.id_usuario, estado="pendiente")
             sesion.add(solicitud)
             sesion.commit()
             print("Solicitud de amistad enviada")
