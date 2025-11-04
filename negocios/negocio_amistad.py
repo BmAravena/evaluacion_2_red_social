@@ -74,9 +74,7 @@ def responder_solicitud(id_receptor):
         usuario = usuarios_filtrados[0]
 
         # Preguntar al receptor si acepta o rechaza
-        confirmar = input(
-            f"{usuario.nombre_usuario} te ha enviado una solicitud de amistad. ¿Deseas aceptar? (si/no): "
-        ).strip().lower()
+        confirmar = input(f"{usuario.nombre_usuario} te ha enviado una solicitud de amistad. ¿Deseas aceptar? (si/no): ").strip().lower()
 
         if confirmar == "si":
             solicitud.estado = "aceptada"

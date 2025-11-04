@@ -61,7 +61,6 @@ def registrar_usuario():
 
 
 
-
 def realizar_publicacion():
     nombre_usuario = input("Ingresa tu nombre de usuario: ")
     usuario = buscar_usuario(nombre_usuario)
@@ -207,6 +206,7 @@ def eliminar_amistad():
                     sesion.delete(amistad_a_borrar)
                     sesion.commit()
                     print(f"Amistad con {nombre_usuario_a_eliminar} eliminada correctamente")
+                    break
                 else:
                     print(f"No eres amigo de {nombre_usuario_a_eliminar}")
                 
