@@ -5,7 +5,7 @@ from sqlalchemy import or_, and_
 from datos.obtener_datos import obtener_datos
 
 
-
+# Validamos la amistad entre dos usuarios, recibiendo dos usuarios y así validando mediante sus Ids
 def valida_amistad(emisor, receptor):
     amistad = Amistad
     amistades = obtener_datos(amistad)
@@ -15,20 +15,15 @@ def valida_amistad(emisor, receptor):
         
     return False
 
-
+# Recibimos dos Ids(Integers), de emisor y receptor 
 def enviar_solicitud(id_emisor, id_receptor):
+    # Verificamos que no se halla enviado la solicitud así mismo
     if not id_emisor.id_usuario == id_receptor.id_usuario:
-        existente = valida_amistad(id_emisor, id_receptor)
-        # existente = (
-        # sesion.query(Amistad)
-        # .filter(
-        #     or_(
-        #         and_(Amistad.id_primer_usuario == id_emisor, Amistad.id_segundo_usuario == id_receptor),
-        #         and_(Amistad.id_primer_usuario == id_receptor, Amistad.id_segundo_usuario == id_emisor)
-        #     )
-        # )
-        # .first() )
 
+        # Instanciamos una amistad dentro de la función, que retornará True o False
+        existente = valida_amistad(id_emisor, id_receptor)
+
+        # Si se cumple lo anterior verificamos que existe la amistad
         if not existente:
             solicitud = Amistad(id_primer_usuario=id_emisor.id_usuario, id_segundo_usuario=id_receptor.id_usuario, estado="pendiente")
             sesion.add(solicitud)
@@ -41,7 +36,7 @@ def enviar_solicitud(id_emisor, id_receptor):
         print("No puedos enviarte solicitud a tí mismo")
 
 
-
+# Respondemos la solicitud de amistad recibiendo únicamente la id del receptor
 def responder_solicitud(id_receptor):
 
     while True:
@@ -54,7 +49,7 @@ def responder_solicitud(id_receptor):
 
         if not pendientes:
             print("No tienes más solicitudes pendientes.")
-            break  # Salir del bucle cuando no queden pendientes
+            break  # Salimos del bucle cuando no queden pendientes
 
         # Procesar la primera solicitud pendiente
         solicitud = pendientes[0]
@@ -84,9 +79,9 @@ def responder_solicitud(id_receptor):
             print(f"Solicitud rechazada de {usuario.nombre_usuario}.")
         else:
             print("Respuesta no válida. La solicitud se mantiene pendiente.")
-            continue  # No commit, vuelve a preguntar si quieres
+            continue  
 
-        # Guardar cambios en la DB inmediatamente
+        # Guardamos cambios en la DB inmediatamente
         try:
             sesion.commit()
         except Exception as e:
