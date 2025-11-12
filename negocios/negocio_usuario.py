@@ -225,23 +225,24 @@ def eliminar_amistad():
                 else:
                     print(f"No eres amigo de {nombre_usuario_a_eliminar}")
                 
-# Editamos publicación, ...
+# Editamos publicación, primero validamos si existe el usuario que desea hacer la operación
 def editar_publicacion():
     nombre_usuario = input("Ingresa tu nombre de usuario: ")
     usuario = buscar_usuario(nombre_usuario)
-    
+    # Si no existe se acaba la función
     if not usuario:
         print("Usuario no encontrado.")
         return
 
     id_usuario = usuario.id_usuario
+    # Le pedimos la publicación a editar
     id_publicacion_editar = int(input("Ingresa la id de la publicación que deseas editar: "))
-
+    # Obtenemos las publicaciones
     publicaciones = obtener_datos(Publicacion)
     publicacion_encontrada = None
     una_pub = publicaciones[0]
-    print(una_pub.__dict__)
-    # Buscar la publicación
+    #print(una_pub.__dict__)
+    # Buscar la publicación según su id
     for pub in publicaciones:
         if pub.id_publicacion == id_publicacion_editar:
             publicacion_encontrada = pub
